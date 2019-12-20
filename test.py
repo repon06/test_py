@@ -41,13 +41,13 @@ if __name__ == '__main__':
     driver = DriverFactory().get_web_driver("chrome")
 
     logist_login = logist_login_page(selenium_driver=driver)
-    logist_home = logist_login.login('ebistrova@utsl.ru', '01499')
+    logist_home = logist_login.login('', '')
     logist_home.goto_logistica()
     transporter_count = logist_home.get_list_transporters_count()
     transporter = logist_home.get_transporter_info()
     print(f'видим перевозчиков {transporter_count}')
     print(f'Перевозчик: {transporter.name}; {transporter.phones} ; {transporter.contacts}; {transporter.transporters}')
-    logist_home.get_all_list_transporters()
+    logist_home.get_all_list_transporters('./logist.txt')
     logist_home.wait(6000)
 
     driver.close()

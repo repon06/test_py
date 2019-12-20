@@ -89,7 +89,7 @@ class logist_home_page(Base_Page):
         transporters = self.driver.find_element(By.CSS_SELECTOR, self.transporters).text
         return Transporter(transporters_name, inn, addr, phones, contacts, transporters)
 
-    def get_all_list_transporters(self):
+    def get_all_list_transporters(self, file_path):
         # print('переходим по всем перевозчикам')
         table = self.driver.find_element(By.CSS_SELECTOR, self.table)
         rows = self.driver.find_elements(By.CSS_SELECTOR, self.table_row)
@@ -100,8 +100,7 @@ class logist_home_page(Base_Page):
             old_transporter_name = transp.name
             print(transp.name)
 
-        File().write_to_file('./logist.txt',
-                             f'Наименование\t\tАдрес\t\tИнн\t\tТелефон\t\tКонтакты\t\tПеревозчики')
+        File().write_to_file(file_path, f'Наименование\t\tАдрес\t\tИнн\t\tТелефон\t\tКонтакты\t\tПеревозчики')
 
         for i in range(5000):
             # print(f'бродим по массиву {i}')
@@ -111,5 +110,5 @@ class logist_home_page(Base_Page):
             transp = self.get_transporter_info()
             print(transp.name)
             if old_transporter_name != transp.name:
-                File().write_to_file('./logist.txt',
+                File().write_to_file(file_path,
                                      f'{transp.name}\t\t{transp.addr}\t\t{transp.inn}\t\t{transp.phones}\t\t{transp.contacts}\t\t{transp.transporters}')
